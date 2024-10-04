@@ -1,5 +1,6 @@
 package org.example.expert.domain.todo.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.annotation.Auth;
@@ -21,9 +22,11 @@ public class TodoController {
     @PostMapping("/todos")
     public ResponseEntity<TodoSaveResponse> saveTodo(
             @Auth AuthUser authUser,
+            HttpServletRequest request,
             @Valid @RequestBody TodoSaveRequest todoSaveRequest
     ) {
-        return ResponseEntity.ok(todoService.saveTodo(authUser, todoSaveRequest));
+        String email = (String) request.getAttribute("email");
+        return ResponseEntity.ok(todoService.saveTodo(authUser, email, todoSaveRequest));
     }
 
     @GetMapping("/todos")
