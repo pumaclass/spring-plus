@@ -56,6 +56,16 @@ public class JwtUtil {
         throw new ServerException("Not Found Token");
     }
 
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            log.error("JWT token validation failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
     public Claims extractClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
