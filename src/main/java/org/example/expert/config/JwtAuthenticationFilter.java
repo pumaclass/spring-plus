@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.user.enums.UserRole;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -52,6 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String email = claims.get("email", String.class);
         String username = claims.get("username", String.class);
         String userRole = claims.get("userRole", String.class);
+
 
         AuthUser authUser = new AuthUser(userId, email, username, UserRole.valueOf(userRole));
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
